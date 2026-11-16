@@ -25,3 +25,23 @@ No rotation spoofing, no packet tricks, no hiding from anti-cheat.
 - **Direction Indicators** (HUD): arrows around the crosshair toward nearby players, with distance. Private worlds only.
 - **Ender Pearl Trainer** (Combat): predicts pearl landings, shows your own throw prediction, tests aiming at armor-stand dummies (auto aim / auto throw are off by default). Private worlds only.
 - **Search bar** in the menu: filters modules and settings across all categories.
+
+
+## GitHub Actions build
+
+The workflow in `.github/workflows/build.yml` installs Gradle 8.12 with
+`gradle/actions/setup-gradle@v4` and runs `gradle build`. This CI path does not
+require `gradlew`.
+
+## Gradle Wrapper status
+
+The source ZIP supplied for this update contained `gradle-wrapper.properties`,
+but did not contain `gradle-wrapper.jar`, `gradlew`, or `gradlew.bat`.
+A complete, official Gradle Wrapper cannot be reconstructed safely without
+the matching wrapper JAR. The CI workflow therefore builds using the Gradle
+installation provisioned by `setup-gradle` instead of pretending that a
+complete wrapper is present.
+
+To generate the complete wrapper on a machine with Gradle 8.12 installed,
+run `gradle wrapper --gradle-version 8.12` from the project root, then commit
+`gradlew`, `gradlew.bat`, and `gradle/wrapper/gradle-wrapper.jar`.
